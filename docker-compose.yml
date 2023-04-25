@@ -1,15 +1,13 @@
-version: '3'
+version: '3.7'
 
 services:
     app:
         image: fastapi_app
-        build:
-            context: ./app
-            dockerfile: Dockerfile
-        ports:
-            - "8000:8000"
+        build: ./app
         volumes:
             - ./app:/app
+        ports:
+            - "8000:8000"
         depends_on:
             - database
         restart: always
@@ -17,14 +15,11 @@ services:
             - fast_api
     database:
         env_file:
-            - ./app/.env
-        image: postgres:13.1
+            - app/.env
+        image: postgres:14
+        restart: unless-stopped
         ports:
             - "5432:5432"
-        environment:
-            POSTGRES_USER: ${DB_USER}
-            POSTGRES_PASSWORD: ${DB_PASSWORD}
-            POSTGRES_DB: ${DB_NAME}
         volumes:
             - fast_api_db:/var/lib/postgresql/data
         networks:

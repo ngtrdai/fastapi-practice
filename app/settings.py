@@ -4,11 +4,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_connection_string():
-    db_engine = os.getenv("DB_ENGINE")
-    db_user = os.getenv("DB_USER")
-    db_password = os.getenv("DB_PASSWORD")
-    db_host = os.getenv("DB_HOST")
-    db_name = os.getenv("DB_NAME")
+    db_engine = os.getenv("DATABASE_DIALECT")
+    db_user = os.getenv("POSTGRES_USER")
+    db_password = os.getenv("POSTGRES_PASSWORD")
+    db_host = os.getenv("DATABASE_HOST")
+    db_name = os.getenv("POSTGRES_DB")
     return f"{db_engine}://{db_user}:{db_password}@{db_host}/{db_name}"
 
 # Database Setting
