@@ -13,6 +13,8 @@ services:
         depends_on:
             - database
         restart: always
+        networks:
+            - fast_api
     database:
         env_file:
             - ./app/.env
@@ -23,3 +25,13 @@ services:
             POSTGRES_USER: ${DB_USER}
             POSTGRES_PASSWORD: ${DB_PASSWORD}
             POSTGRES_DB: ${DB_NAME}
+        volumes:
+            - fast_api_db:/var/lib/postgresql/data
+        networks:
+            - fast_api
+networks:
+    fast_api:
+        driver: bridge
+volumes:
+    fast_api_db:
+        driver: local
