@@ -12,13 +12,14 @@ services:
             - ./app:/app
         depends_on:
             - database
+        restart: always
     database:
         env_file:
-            - .env
+            - ./app/.env
         image: postgres:13.1
         ports:
             - "5432:5432"
         environment:
-            POSTGRES_USER: ${POSTGRES_USER}
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
