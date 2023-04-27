@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, String, Uuid
+from sqlalchemy import Boolean, Column, String, Uuid, ForeignKey
 from database import Base
 from schemas.base_entity import BaseEntity
 from passlib.context import CryptContext
@@ -17,11 +17,12 @@ class User(Base, BaseEntity):
     is_active = Column(Boolean, nullable=False, default=True)
     is_admin = Column(Boolean, nullable=False, default=False)
     hashed_password = Column(String(128), nullable=False)
+    company_id = Column(Uuid, ForeignKey('companies.id'), nullable=False)
 
-    company_id = relationship("Company", back_populates="users")
+    company = relationship("Company")
 
 def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
 
-def verify_password(self, password: str) -> bool:
+def verify_password(password: str, self) -> bool:
     return pwd_context.verify(password, self.hashed_password)
