@@ -28,7 +28,8 @@ def upgrade() -> None:
         sa.Column('updated_at', sa.DateTime, nullable=False, server_default=sa.func.now(), onupdate=sa.func.now()),
     )
 
+    op.create_index(op.f('ix_companies_name'), 'companies', ['name'], unique=True)
+
 
 def downgrade() -> None:
     op.drop_table('companies')
-    pass
